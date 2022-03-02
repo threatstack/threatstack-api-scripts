@@ -1,0 +1,19 @@
+[USER_INFO]
+# TS_USER_ID - User ID of the API key holder
+# The key is user specific, not organization specific.
+TS_USER_ID = <>
+# TS_API_KEY - API key for the user specified by TS_USER_ID
+TS_API_KEY = <>
+
+[DEFAULT]
+# TS_ORGANIZATION_ID - Organization ID of the organization to access
+TS_ORGANIZATION_ID = <>
+# TS_ORGANIZATION_NAME - Organization Name to use in output filenames
+TS_ORGANIZATION_NAME = "Production"
+
+[STAGING]
+# TS_ORGANIZATION_ID - Organization ID of the organization to access
+TS_ORGANIZATION_ID = <>
+# TS_ORGANIZATION_NAME - Organization Name to use in output filenames
+TS_ORGANIZATION_NAME = "Staging"
+

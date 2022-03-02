@@ -1,0 +1,11 @@
+[DEFAULT]
+TS_HOST = api.threatstack.com
+# TS_USER_ID - User ID of the API key holder
+# The key is user specific, not organization specific.
+TS_USER_ID = 
+# TS_API_KEY - API key for the user specified by TS_USER_ID
+TS_API_KEY = 
+# TS_ORGANIZATION_ID - Organization ID of the organization to access
+# Org Name
+TS_ORGANIZATION_NAME = "Org Name"
+TS_ORGANIZATION_ID = 
