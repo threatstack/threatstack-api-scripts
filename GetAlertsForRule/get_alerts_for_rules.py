@@ -3,9 +3,9 @@
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
-# 
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +22,7 @@
 
 import argparse
 import configparser
-import datetime
+from datetime import datetime, timezone
 import os
 import re
 import sys
@@ -31,6 +31,7 @@ import time
 import pandas
 
 import threatstack
+
 
 def get_args():
     """
@@ -102,11 +103,10 @@ def get_args():
     org_config = cli_args.org_config
     alert_status = cli_args.alert_status
     rule_id = cli_args.rule_id
-    end_date = datetime.datetime.today().isoformat()
-    numberofdays =int(cli_args.daycount)
-    start = datetime.datetime.today() - datetime.timedelta(numberofdays)
-    start_date = datetime.datetime.isoformat(start)
-
+    end_date = datetime.now(timezone.utc)
+    numberofdays = int(cli_args.daycount)
+    start = datetime.utcnow() - datetime.timedelta(numberofdays)
+    start_date = datetime.isoformat(start)
 
     if not os.path.isfile(config_file):
         print("Unable to find config file: " + config_file + ", exiting.")
@@ -142,8 +142,16 @@ def get_args():
     tmp_org_name = re.sub("[\W_]+", "_", org_opts["TS_ORGANIZATION_NAME"])
     org_name = re.sub("[^A-Za-z0-9]+", "", tmp_org_name)
 
-    
-    return user_id, api_key, org_id, org_name, alert_status, start_date, end_date, rule_id
+    return (
+        user_id,
+        api_key,
+        org_id,
+        org_name,
+        alert_status,
+        start_date,
+        end_date,
+        rule_id,
+    )
 
 
 def print_parsed_args(
@@ -214,7 +222,6 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
         )
     print(getliststring)
 
-
     alert_list = uaclient.get_list(getliststring)
 
     while alert_list:
@@ -250,7 +257,6 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
                     + alert_list.token
                 )
 
-
             alert_list = uaclient.get_list(querystring)
             time.sleep(0.09)
 
@@ -276,7 +282,7 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
                 + "-"
                 + alertstatus
                 + "-"
-                + f"{datetime.datetime.now():%Y-%m-%d-%H-%M}"
+                + f"{datetime.utcnow():%Y-%m-%d-%H-%M}"
                 + ".csv"
             )
             df.to_csv(alertfile, index=False)
@@ -289,7 +295,7 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
                 + "-"
                 + alertstatus
                 + "-"
-                + f"{datetime.datetime.now():%Y-%m-%d-%H-%M}"
+                + f"{datetime.utcnow():%Y-%m-%d-%H-%M}"
                 + ".csv"
             )
             dfonlymatchingruleid.to_csv(alertfile, index=False)
@@ -309,7 +315,7 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
                 + "-"
                 + alertstatus
                 + "-"
-                + f"{datetime.datetime.now():%Y-%m-%d-%H-%M}"
+                + f"{datetime.utcnow():%Y-%m-%d-%H-%M}"
                 + ".csv"
             )
             df.to_csv(alertfile, index=False)
@@ -322,7 +328,7 @@ def get_alerts(userid, apikey, orgid, org_name, alert_status, start, end_date, r
                 + "-"
                 + alertstatus
                 + "-"
-                + f"{datetime.datetime.now():%Y-%m-%d-%H-%M}"
+                + f"{datetime.utcnow():%Y-%m-%d-%H-%M}"
                 + ".csv"
             )
             dfonlymatchingruleid.to_csv(alertfile, index=False)
