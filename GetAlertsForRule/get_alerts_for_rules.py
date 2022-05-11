@@ -22,7 +22,7 @@
 
 import argparse
 import configparser
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import os
 import re
 import sys
@@ -103,11 +103,11 @@ def get_args():
     org_config = cli_args.org_config
     alert_status = cli_args.alert_status
     rule_id = cli_args.rule_id
-    end_date = datetime.now(timezone.utc)
+    end_date = datetime.isoformat(datetime.utcnow())
     numberofdays = int(cli_args.daycount)
-    start = datetime.utcnow() - datetime.timedelta(numberofdays)
+    start = datetime.utcnow() - timedelta(days=numberofdays)
     start_date = datetime.isoformat(start)
-
+    
     if not os.path.isfile(config_file):
         print("Unable to find config file: " + config_file + ", exiting.")
         sys.exit(-1)
