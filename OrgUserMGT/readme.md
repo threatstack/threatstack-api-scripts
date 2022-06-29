@@ -1,6 +1,6 @@
 
 #  Organization Management
-There are mulitple scripts that can be used to manage the users in a clients Organization. The reason for spliting these into the three scripts is to allow for less arguments to have to be passed to run the needed action. 
+There are mulitple scripts that can be used to manage the users in a clients Organization. The reason for splitting these into the three scripts is to allow for less arguments to have to be passed to run the needed action. 
 
 Actions are 
 + Invite a new user
@@ -8,7 +8,7 @@ Actions are
 + Create a CSV file of all users in an Organization
 
 ##  invite_user.py
-This Python3 script is used to invite users to your Organization. The script expects the role to be either a "user", "reader" as well as the user's email address. 
+This Python3 script is used to invite users to your Organization. The script expects the role to be either a "user" or "reader" as well as the user's email address. 
 
 ### Usage: Creates a new user in the Threat Stack platform
 ---
